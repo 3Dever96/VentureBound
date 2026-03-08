@@ -1,6 +1,8 @@
-# Title
+# Venture Bound
 
 ## Description
+
+Venture Bound is a Cooperative Dungeon Crawler Roguelike with online multiplayer capabilities and a top down rpg aesthetic.
 
 ## Getting Started
 
@@ -16,7 +18,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 1. **Clone the repository:** 
 '''bash
-git clone https://github.com/3Dever96/[ProjectName].git
+git clone https://github.com/3Dever96/VentureBound.git
 '''
 
 2. **Open in Unity**
