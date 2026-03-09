@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace VentureBound.System
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : NetworkBehaviour
     {
         public static GameManager instance;
 

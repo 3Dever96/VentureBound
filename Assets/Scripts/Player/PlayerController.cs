@@ -75,6 +75,8 @@ namespace VentureBound.Player
                 controller = GetComponent<CharacterController>();
 
                 input.onActionTriggered += OnAction;
+
+                FindFirstObjectByType<CameraTarget>().SetTarget(transform);
             }
         }
 
