@@ -1,123 +1,133 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace VentureBound.Dungeon
 {
     public class DungeonGenerator : MonoBehaviour
     {
-        // Prefab of the room object to populate the scene with.
-        [SerializeField] GameObject roomObject;
+        [Header("Settings")]
+        public int totalRoomCount = 64;
+        [Range(0f, 1f)] public float branchChance = 0.7f;
+        [Range(0f, 1f)] public float loopChance = 0.2f;
+        public int testSeed;
 
-        // The maximum number of rooms the dungeon can have.
-        [SerializeField] int maxRooms;
-        // The probability of a room leading to another.
-        [SerializeField] float roomChance;
+        Dictionary<Vector2Int, RoomData> dungeon = new Dictionary<Vector2Int, RoomData>();
+        Queue<Vector2Int> growthQueue = new Queue<Vector2Int>();
 
-        // The room data of the dungeon.
-        [System.NonSerialized] Dictionary<Vector2Int, RoomData> dungeonLayout = new Dictionary<Vector2Int, RoomData>();
-        // The queue used to create the dungeon.
-        [System.NonSerialized] Queue<Vector2Int> roomQueue = new Queue<Vector2Int>();
+        public GameObject roomObject;
 
-        void Start()
+        private void Start()
         {
-            GenerateLayout(0);
+            GenerateLayout(testSeed);
         }
 
-        void GenerateLayout(int seed)
+        public void GenerateLayout(int seed)
         {
-            // Initialize the dungeon seed and set the starting position
             System.Random rng = new System.Random(seed);
+
+            dungeon.Clear();
+            growthQueue.Clear();
+
             Vector2Int startPos = Vector2Int.zero;
+            RoomData root = new RoomData(startPos);
+            dungeon.Add(startPos, root);
+            growthQueue.Enqueue(startPos);
 
-            // Add the starting room to the dungeon layout and to the queue.
-            dungeonLayout.Add(startPos, new RoomData(startPos));
-            roomQueue.Enqueue(startPos);
-
-            // Increase the number of rooms created.
-            int roomsCreated = 1;
-
-            // Iterate through the queue until the dungeon is proper size.
-            while (roomQueue.Count > 0 && roomsCreated < maxRooms)
+            while (growthQueue.Count > 0 && dungeon.Count < totalRoomCount)
             {
-                // Get the next queued position for a room.
-                Vector2Int currentPos = roomQueue.Dequeue();
+                Vector2Int currentPos = growthQueue.Dequeue();
 
-                // Get the current room data of the queued position.
-                RoomData currentRoom = dungeonLayout[currentPos];
+                Vector2Int[] dirs = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+                Shuffle(dirs, rng);
 
-                // Sync the doors of the room to its neighbors or set the possibility of new rooms.
-                SyncRoomDoors(currentRoom, rng);
-
-                // Array of vectors to check for new possible rooms and positions.
-                Vector2Int[] dir = new Vector2Int[] { Vector2Int.up, Vector2Int.right, Vector2Int.left, Vector2Int.down };
-
-                for (var i = 0; i < dir.Length; i++)
+                foreach (Vector2Int dir in dirs)
                 {
-                    // Find the current neighbor cell position
-                    Vector2Int neighborPos = currentPos + dir[i];
+                    Vector2Int neighborPos = currentPos + dir;
 
-                    // Check if a new room can be created in the cell position
-                    if (!dungeonLayout.ContainsKey(neighborPos) && currentRoom.hasDoor[i])
+                    if (!dungeon.ContainsKey(neighborPos))
                     {
-                        // Create a new room data
-                        RoomData newRoom = new RoomData(neighborPos);
-                        dungeonLayout.Add(neighborPos, newRoom);
-                        roomQueue.Enqueue(neighborPos);
-                        
-                        // Increase the number of rooms in the dungeon and check if the dungeon is proper size yet.
-                        roomsCreated++;
-
-                        if (roomsCreated >= maxRooms)
+                        if (rng.NextDouble() < branchChance)
                         {
-                            break;
+                            RoomData newRoom = new RoomData(neighborPos);
+
+                            newRoom.connections.Add(currentPos);
+                            dungeon[currentPos].connections.Add(neighborPos);
+
+                            dungeon.Add(neighborPos, newRoom);
+                            growthQueue.Enqueue(neighborPos);
+                        }
+                   }
+                }
+            }
+
+            AddLoops(rng);
+
+            AssignSpecialRooms(rng);
+
+            RenderDungeon();
+        }
+
+        void AddLoops(System.Random rng)
+        {
+            List<Vector2Int> positions = dungeon.Keys.ToList();
+
+            foreach (Vector2Int pos in positions)
+            {
+                Vector2Int[] dirs = { Vector2Int.up, Vector2Int.down, Vector2Int.left, Vector2Int.right };
+
+                foreach (Vector2Int dir  in dirs)
+                {
+                    Vector2Int neighborPos = pos + dir;
+
+                    if (dungeon.ContainsKey(neighborPos) && !dungeon[pos].connections.Contains(neighborPos))
+                    {
+                        if (rng.NextDouble() < loopChance)
+                        {
+                            dungeon[pos].connections.Add(neighborPos);
+                            dungeon[neighborPos].connections.Add(pos);
                         }
                     }
                 }
             }
+        }
 
-            // Get a list of all the positions in the dungeon layout.
-            List<Vector2Int> finalList = new List<Vector2Int>(dungeonLayout.Keys);
+        void AssignSpecialRooms(System.Random rng)
+        {
+            List<Vector2Int> availablePositions = dungeon.Keys.ToList();
 
-            // Iterate through all the positions and create a new room object at those positions.
-            for (var i = 0; i < finalList.Count; i++)
+            Vector2Int startPos = availablePositions[rng.Next(availablePositions.Count) - 1];
+            dungeon[startPos].type = RoomType.Start;
+            availablePositions.Remove(startPos);
+
+            Vector2Int miniBossPos = availablePositions[rng.Next(availablePositions.Count) - 1];
+            dungeon[miniBossPos].type = RoomType.MiniBoss;
+            availablePositions.Remove(miniBossPos);
+
+            Vector2Int bossPos = availablePositions[rng.Next(availablePositions.Count) - 1];
+            dungeon[bossPos].type = RoomType.Boss;
+            availablePositions.Remove(bossPos);
+        }
+
+        void RenderDungeon()
+        {
+            foreach (var pair in dungeon)
             {
+                RoomData room = pair.Value;
+
                 RoomObject newRoom = Instantiate(roomObject, transform).GetComponent<RoomObject>();
-                // Pass in the corresponding room data to get information about the room.
-                newRoom.InitializeRoom(dungeonLayout[finalList[i]]);
+                newRoom.InitializeRoom(room);
             }
         }
 
-        void SyncRoomDoors(RoomData room, System.Random rng)
+        void Shuffle(Vector2Int[] array, System.Random rng)
         {
-            // A list of vectors to check for neighbors.
-            List<Vector2Int> dir = new List<Vector2Int>() { Vector2Int.up, Vector2Int.right, Vector2Int.left, Vector2Int.down };
-
-            for (var i = 0; i < dir.Count; i++)
+            for (int i = 0; i < array.Length; i++)
             {
-                if (dungeonLayout.ContainsKey(room.gridPos + dir[i]))
-                {
-                    // Sync the doors between the room and its neighbor.
-                    /*
-                     * 0 = Up
-                     * 1 = Right
-                     * 2 = Left
-                     * 3 = Down
-                     * 
-                     * Think of the directional vectors as a D6.
-                     * Just as opposite ends of a D6 add up to 7, the opposite directions add up to 3.
-                     * To get the corresponding opposite direction in the neighbor room, simply subtract i from 3.
-                     * 
-                     */
-                    RoomData nRoom = dungeonLayout[room.gridPos + dir[i]];
-                    room.hasDoor[i] = nRoom.hasDoor[3 - i];
-                    room.doorType[i] = nRoom.doorType[3 - i];
-                }
-                else
-                {
-                    // Set the doors randomly using the seed.
-                    room.hasDoor[i] = rng.NextDouble() > roomChance;
-                    room.doorType[i] = rng.Next(5);
-                }
+                Vector2Int temp = array[i];
+                int randomIndex = rng.Next(array.Length);
+                array[i] = array[randomIndex];
+                array[randomIndex] = temp;
             }
         }
     }

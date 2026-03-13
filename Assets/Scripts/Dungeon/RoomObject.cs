@@ -19,12 +19,20 @@ namespace VentureBound.Dungeon
                 return;
             }
 
-            transform.position = new Vector3(roomSize.x * room.gridPos.x, 0f, roomSize.y * room.gridPos.y);
+            transform.position = new Vector3(room.gridPos.x * roomSize.x, 0f, room.gridPos.y * roomSize.y);
 
-            for (var i = 0; i < doors.Length; i++)
+            Vector2Int[] dirs = { Vector2Int.up, Vector2Int.right, Vector2Int.left, Vector2Int.down };
+
+            for (var i = 0; i < dirs.Length; i++)
             {
-                doors[i].gameObject.SetActive(room.hasDoor[i]);
-                doors[i].color = doorColors[room.doorType[i]];
+                if (room.connections.Contains(room.gridPos + dirs[i]))
+                {
+                    doors[i].gameObject.SetActive(true);
+                }
+                else
+                {
+                    doors[i].gameObject.SetActive(false);
+                }
             }
         }
     }

@@ -412,9 +412,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78714031a9f1f6746b57d96ce8f2998a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: VentureBound.Dungeon::VentureBound.Dungeon.DungeonGenerator
+  totalRoomCount: 48
+  branchChance: 0.7
+  loopChance: 0.2
+  testSeed: 0
   roomObject: {fileID: 1816775138946105181, guid: 300dcc51687fbb24d918a2373c208959, type: 3}
-  maxRooms: 64
-  roomChance: 0.3
 --- !u!4 &1960453902
 Transform:
   m_ObjectHideFlags: 0
