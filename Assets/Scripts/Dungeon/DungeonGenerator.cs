@@ -51,8 +51,10 @@ namespace VentureBound.Dungeon
                         {
                             RoomData newRoom = new RoomData(neighborPos);
 
-                            newRoom.connections.Add(currentPos);
-                            dungeon[currentPos].connections.Add(neighborPos);
+                            int doorIndex = rng.Next(5);
+
+                            newRoom.connections.Add(currentPos, doorIndex);
+                            dungeon[currentPos].connections.Add(neighborPos, doorIndex);
 
                             dungeon.Add(neighborPos, newRoom);
                             growthQueue.Enqueue(neighborPos);
@@ -80,12 +82,14 @@ namespace VentureBound.Dungeon
                 {
                     Vector2Int neighborPos = pos + dir;
 
-                    if (dungeon.ContainsKey(neighborPos) && !dungeon[pos].connections.Contains(neighborPos))
+                    if (dungeon.ContainsKey(neighborPos) && !dungeon[pos].connections.ContainsKey(neighborPos))
                     {
                         if (rng.NextDouble() < loopChance)
                         {
-                            dungeon[pos].connections.Add(neighborPos);
-                            dungeon[neighborPos].connections.Add(pos);
+                            int doorIndex = rng.Next(5);
+
+                            dungeon[pos].connections.Add(neighborPos, doorIndex);
+                            dungeon[neighborPos].connections.Add(pos, doorIndex);
                         }
                     }
                 }
@@ -96,15 +100,15 @@ namespace VentureBound.Dungeon
         {
             List<Vector2Int> availablePositions = dungeon.Keys.ToList();
 
-            Vector2Int startPos = availablePositions[rng.Next(availablePositions.Count) - 1];
+            Vector2Int startPos = availablePositions[rng.Next(availablePositions.Count)];
             dungeon[startPos].type = RoomType.Start;
             availablePositions.Remove(startPos);
 
-            Vector2Int miniBossPos = availablePositions[rng.Next(availablePositions.Count) - 1];
+            Vector2Int miniBossPos = availablePositions[rng.Next(availablePositions.Count)];
             dungeon[miniBossPos].type = RoomType.MiniBoss;
             availablePositions.Remove(miniBossPos);
 
-            Vector2Int bossPos = availablePositions[rng.Next(availablePositions.Count) - 1];
+            Vector2Int bossPos = availablePositions[rng.Next(availablePositions.Count)];
             dungeon[bossPos].type = RoomType.Boss;
             availablePositions.Remove(bossPos);
         }

@@ -15,7 +15,7 @@ namespace VentureBound.Dungeon
     {
         public Vector2Int gridPos;
         public RoomType type = RoomType.Normal;
-        public List<Vector2Int> connections = new List<Vector2Int>();
+        public Dictionary<Vector2Int, int> connections = new Dictionary<Vector2Int, int>();
 
         public RoomData(Vector2Int pos)
         {

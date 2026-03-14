@@ -25,14 +25,30 @@ namespace VentureBound.Dungeon
 
             for (var i = 0; i < dirs.Length; i++)
             {
-                if (room.connections.Contains(room.gridPos + dirs[i]))
+                if (room.connections.ContainsKey(room.gridPos + dirs[i]))
                 {
                     doors[i].gameObject.SetActive(true);
+                    doors[i].color = doorColors[room.connections[room.gridPos + dirs[i]]];
                 }
                 else
                 {
                     doors[i].gameObject.SetActive(false);
                 }
+            }
+
+            switch (room.type)
+            {
+                case RoomType.Normal:
+                    break;
+                case RoomType.Start:
+                    roomType.color = roomTypeColors[1];
+                    break;
+                case RoomType.MiniBoss:
+                    roomType.color = roomTypeColors[2];
+                    break;
+                case RoomType.Boss:
+                    roomType.color = roomTypeColors[3];
+                    break;
             }
         }
     }
