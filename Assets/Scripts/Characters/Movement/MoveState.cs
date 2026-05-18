@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace VentureBound.CharacterMovement
 {
+    [RequireComponent(typeof(MovementController))]
     public abstract class MoveState : MonoBehaviour
     {
         public string StateName { get { return GetType().ToString(); } }
