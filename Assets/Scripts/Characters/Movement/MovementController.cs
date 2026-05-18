@@ -17,6 +17,8 @@ namespace VentureBound.CharacterMovement
 
         private void Start()
         {
+            Direction = transform.forward;
+
             Controller = GetComponent<CharacterController>();
 
             InitializeStateMachine();

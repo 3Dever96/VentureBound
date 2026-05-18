@@ -15,9 +15,18 @@ namespace VentureBound.CharacterMovement
 
         private float moveSpeed;
 
+        [Header("Vertical Movement")]
+        [SerializeField] private float jumpSpeed;
+        [SerializeField] private float stickForce;
+        [SerializeField] private bool useJump;
+
+        private bool canJump;
+
         public override void StartState(MovementController move)
         {
-            
+            move.VerticalSpeed = stickForce;
+
+            canJump = false;
         }
 
         public override void UpdateState(MovementController move)
@@ -46,7 +55,14 @@ namespace VentureBound.CharacterMovement
 
                     if (move.CurrentSpeed < maxSpeed)
                     {
-                        move.CurrentSpeed += accel * Time.deltaTime;
+                        if (maxSpeed != sprintSpeed)
+                        {
+                            move.CurrentSpeed += accel * Time.deltaTime;
+                        }
+                        else
+                        {
+                            move.CurrentSpeed = sprintSpeed;
+                        }
                     }
                     else if (move.CurrentSpeed > maxSpeed + 0.1f)
                     {
@@ -67,12 +83,31 @@ namespace VentureBound.CharacterMovement
 
             move.FaceDirection(move.Direction);
 
+            if (useJump)
+            {
+                if (InputManager.Instance.Jump && canJump)
+                {
+                    move.VerticalSpeed = jumpSpeed;
+                }
+
+                if (!InputManager.Instance.Jump && !canJump)
+                {
+                    canJump = true;
+                }
+            }
+
             move.ApplyMovement(move.Direction);
         }
 
         public override void ChangeState(MovementController move)
         {
-            
+            if (move.States.ContainsKey("VentureBound.CharacterMovement.PlayerAirState"))
+            {
+                if (move.VerticalSpeed > 0f || !Physics.CheckSphere(transform.position, move.Controller.radius - 0.01f, LayerMask.GetMask("Solid")))
+                {
+                    move.SetState(move.States["VentureBound.CharacterMovement.PlayerAirState"]);
+                }
+            }
         }
 
         public override void ExitState(MovementController move)
