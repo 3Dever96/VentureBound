@@ -11,13 +11,13 @@ TagManager:
   - Solid
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - PlayerHitBox
+  - PlayerHurtBox
+  - Enemy
+  - EnemyHitBox
+  - EnemyHurtBox
+  - Interaction
   - 
   - 
   - 
