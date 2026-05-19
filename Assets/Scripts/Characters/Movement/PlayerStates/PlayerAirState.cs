@@ -10,8 +10,9 @@ namespace VentureBound.CharacterMovement
         private float gravity;
 
         [Header("Double Jump")]
-        [SerializeField] bool useDoubleJump;
-        [SerializeField] float jumpSpeed;
+        [SerializeField] private bool useDoubleJump;
+        [SerializeField] private float jumpSpeed;
+        [SerializeField] private float moveSpeed;
 
         private bool canJump;
         private bool jumpCheck;
@@ -39,6 +40,8 @@ namespace VentureBound.CharacterMovement
                     {
                         move.Direction = direction;
                     }
+
+                    move.CurrentSpeed = Mathf.Max(moveSpeed, move.CurrentSpeed);
 
                     move.VerticalSpeed = jumpSpeed;
                     canJump = false;
