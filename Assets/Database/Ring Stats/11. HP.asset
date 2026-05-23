@@ -16,10 +16,10 @@ MonoBehaviour:
   statAbb: HP
   statRingIndex: 11
   statValues:
-  - 30
-  - 33
-  - 36
-  - 39
-  - 42
-  - 45
   - 48
+  - 45
+  - 42
+  - 39
+  - 36
+  - 33
+  - 30
