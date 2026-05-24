@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa636ee7351b814383c63176aa8cfa1, type: 3}
+  m_Name: 11. Hero'sStance
+  m_EditorClassIdentifier: VentureBound::VentureBound.Skill
+  skillName: Hero's Stance
+  skillDescription: If the user's Hp is lower than 30%, reduces knockback from attacks.
+  ringIndex: 11
+  skillType: 1
+  parentSkills:
+  - {fileID: 11400000, guid: 8522378981a78d84d91ebc8a973497f3, type: 2}
+  - {fileID: 11400000, guid: aec9dc12e461cad49ac3f7b08ec576af, type: 2}

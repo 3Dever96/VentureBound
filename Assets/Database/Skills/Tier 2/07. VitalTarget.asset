@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa636ee7351b814383c63176aa8cfa1, type: 3}
+  m_Name: 07. VitalTarget
+  m_EditorClassIdentifier: VentureBound::VentureBound.Skill
+  skillName: Vital Target
+  skillDescription: If the user's HP is below 30%, critical rate is increased.
+  ringIndex: 7
+  skillType: 1
+  parentSkills:
+  - {fileID: 11400000, guid: f6250864a742d744d902f283c82797ce, type: 2}
+  - {fileID: 11400000, guid: b03f60719b1c5b24da315c5bf78ba5cd, type: 2}

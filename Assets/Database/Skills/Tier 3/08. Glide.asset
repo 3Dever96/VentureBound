@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa636ee7351b814383c63176aa8cfa1, type: 3}
+  m_Name: 08. Glide
+  m_EditorClassIdentifier: VentureBound::VentureBound.Skill
+  skillName: Glide
+  skillDescription: Move through the air at high speeds.
+  ringIndex: 8
+  skillType: 0
+  parentSkills:
+  - {fileID: 11400000, guid: b2fc8b89c64518941b85c596b354653f, type: 2}
+  - {fileID: 11400000, guid: 3736668fab12a084bb4cbb3fbd88860e, type: 2}

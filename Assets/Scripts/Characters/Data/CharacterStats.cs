@@ -1,6 +1,7 @@
 using UnityEngine;
+using VentureBound.Database;
 
-namespace VentureBound
+namespace VentureBound.CharacterData
 {
     public class CharacterStats : MonoBehaviour
     {

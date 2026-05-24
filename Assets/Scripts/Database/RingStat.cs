@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace VentureBound
+namespace VentureBound.Database
 {
     [CreateAssetMenu(fileName = "New Stat", menuName = "Database/Stat")]
     public class RingStat : ScriptableObject

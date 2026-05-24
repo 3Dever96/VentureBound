@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace VentureBound
+namespace VentureBound.Dungeon
 {
     public class FloorTile : MonoBehaviour
     {

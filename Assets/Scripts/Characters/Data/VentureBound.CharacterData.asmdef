@@ -1,0 +1,16 @@
+{
+    "name": "VentureBound.CharacterData",
+    "rootNamespace": "VentureBound.CharacterData",
+    "references": [
+        "VentureBound.Database"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

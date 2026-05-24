@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace VentureBound
+namespace VentureBound.Database
 {
     public class Database : MonoBehaviour
     {
@@ -11,6 +11,8 @@ namespace VentureBound
         public Class[] classes;
         public Race[] races;
         public ElementAffinity[] elementAffinities;
+
+        public Skill[] skills;
 
         private void Awake()
         {

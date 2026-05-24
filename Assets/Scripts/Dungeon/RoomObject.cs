@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace VentureBound
+namespace VentureBound.Dungeon
 {
     public class RoomObject : MonoBehaviour
     {

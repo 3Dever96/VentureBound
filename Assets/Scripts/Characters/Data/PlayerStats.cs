@@ -1,10 +1,14 @@
+using System.Collections.Generic;
 using UnityEngine;
+using VentureBound.Database;
 
-namespace VentureBound
+namespace VentureBound.CharacterData
 {
     public class PlayerStats : CharacterStats
     {
         public Race myRace;
+
+        public Dictionary<string, Skill> skills = new Dictionary<string, Skill>();
 
         private void Start()
         {
@@ -12,16 +16,25 @@ namespace VentureBound
             int raceIndex = Random.Range(0, 12);
             int affinityIndex = Random.Range(0, 12);
 
-            myClass = Database.instance.classes[classIndex];
-            myRace = Database.instance.races[raceIndex];
-            myAffinity = Database.instance.elementAffinities[affinityIndex];
+            myClass = Database.Database.instance.classes[classIndex];
+            myRace = Database.Database.instance.races[raceIndex];
+            myAffinity = Database.Database.instance.elementAffinities[affinityIndex];
 
             SetStats();
+
+            for (var i = 0; i < Database.Database.instance.skills.Length; i++)
+            {
+                Skill skill = Database.Database.instance.skills[i];
+
+                skills.Add(skill.skillName, skill);
+            }
+
+            print(skills.Count);
         }
 
         protected override void SetStats()
         {
-            Database database = Database.instance;
+            Database.Database database = Database.Database.instance;
 
             DEF = database.stats[0].GetStatValue(myClass.classRingIndex) + database.stats[0].GetStatValue(myRace.raceRingIndex) + database.stats[0].GetStatValue(myAffinity.affinityRingIndex);
             WIS = database.stats[1].GetStatValue(myClass.classRingIndex) + database.stats[1].GetStatValue(myRace.raceRingIndex) + database.stats[1].GetStatValue(myAffinity.affinityRingIndex);

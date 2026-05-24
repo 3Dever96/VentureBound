@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace VentureBound
+namespace VentureBound.Database
 {
     [CreateAssetMenu(fileName = "New ElementAffinity", menuName = "Database/ElementAffinity")]
     public class ElementAffinity : ScriptableObject
