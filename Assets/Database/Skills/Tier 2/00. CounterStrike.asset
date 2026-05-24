@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa636ee7351b814383c63176aa8cfa1, type: 3}
+  m_Name: 00. CounterStrike
+  m_EditorClassIdentifier: VentureBound::VentureBound.Skill
+  skillName: Counter Strike
+  skillDescription: After successfully blocking an attack, the user can immediately
+    attack.
+  ringIndex: 0
+  skillType: 0
+  parentSkills:
+  - {fileID: 11400000, guid: aec9dc12e461cad49ac3f7b08ec576af, type: 2}
+  - {fileID: 11400000, guid: 67962cec94bf8944cbd6a6c4eaa18ca9, type: 2}

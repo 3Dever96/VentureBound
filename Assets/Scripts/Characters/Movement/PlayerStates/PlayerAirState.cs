@@ -38,11 +38,10 @@ namespace VentureBound.CharacterMovement
 
                     if (direction != Vector3.zero)
                     {
+                        move.CurrentSpeed = Mathf.Max(moveSpeed, move.CurrentSpeed);
                         move.Direction = direction;
                     }
-
-                    move.CurrentSpeed = Mathf.Max(moveSpeed, move.CurrentSpeed);
-
+                    
                     move.VerticalSpeed = jumpSpeed;
                     canJump = false;
                     jumpCheck = true;

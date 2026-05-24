@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa636ee7351b814383c63176aa8cfa1, type: 3}
+  m_Name: 01. HardBody
+  m_EditorClassIdentifier: VentureBound::VentureBound.Skill
+  skillName: Hard Body
+  skillDescription: If user's HP is below 30%, user's defense is doubled.
+  ringIndex: 1
+  skillType: 1
+  parentSkills:
+  - {fileID: 11400000, guid: 67962cec94bf8944cbd6a6c4eaa18ca9, type: 2}
+  - {fileID: 11400000, guid: 004898f30d119a240b8cfba23666bc7e, type: 2}

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa636ee7351b814383c63176aa8cfa1, type: 3}
+  m_Name: 10. ChargeAttack
+  m_EditorClassIdentifier: VentureBound::VentureBound.Skill
+  skillName: Charge Attack
+  skillDescription: Charge and release melee attack to unleash heavy attack.
+  ringIndex: 10
+  skillType: 0
+  parentSkills:
+  - {fileID: 11400000, guid: efe7bee9b2a0f4e43bcb4fc210854804, type: 2}
+  - {fileID: 11400000, guid: a6ff0870c98d2944ca5e7c65e287abc9, type: 2}

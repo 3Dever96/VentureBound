@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace VentureBound
+namespace VentureBound.Dungeon
 {
     public class FloorTile : MonoBehaviour
     {
@@ -8,11 +8,16 @@ namespace VentureBound
         public Vector2Int gridPos;
         public RoomObject myRoom;
 
+        [SerializeField] private Color[] colors;
+
         public void SetScale(int min, int max)
         {
             Vector2Int[] directions = { Vector2Int.up, Vector2Int.down, Vector2Int.right, Vector2Int.left };
 
             int scale = Random.Range(min, max);
+
+            Renderer myRenderer = GetComponentInChildren<Renderer>();
+            myRenderer.material.color = colors[scale];
 
             if (scale != 0)
             {

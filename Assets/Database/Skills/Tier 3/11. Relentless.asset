@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efa636ee7351b814383c63176aa8cfa1, type: 3}
+  m_Name: 11. Relentless
+  m_EditorClassIdentifier: VentureBound::VentureBound.Skill
+  skillName: Relentless
+  skillDescription: If an attack would reduce the user's HP to zero, the user maintains
+    1 HP.
+  skillRingIndex: 0
+  skillType: 1
+  parentSkills:
+  - {fileID: 11400000, guid: a6ff0870c98d2944ca5e7c65e287abc9, type: 2}
+  - {fileID: 11400000, guid: d9481e2d2d3ce7d40afa46d377b6eb72, type: 2}
+  skillCosts: 01000000020000000300000004000000050000000600000007000000
