@@ -1,5 +1,6 @@
 using UnityEngine;
 using VentureBound.Managers;
+using VentureBound.CharacterData;
 
 namespace VentureBound.CharacterMovement
 {
@@ -14,6 +15,9 @@ namespace VentureBound.CharacterMovement
         [SerializeField] private float maxTurnAngle;
 
         private float moveSpeed;
+
+        private bool canSprint;
+        private bool hasSprintPower;
 
         [Header("Vertical Movement")]
         [SerializeField] private float jumpSpeed;
@@ -35,7 +39,21 @@ namespace VentureBound.CharacterMovement
             direction.y = 0f;
             direction = direction.normalized;
 
-            moveSpeed = InputManager.Instance.Sprint ? sprintSpeed : runSpeed;
+            hasSprintPower = move.Stats.currentSP > 0;
+
+            if (!canSprint)
+            {
+                canSprint = move.Stats.currentSP == move.Stats.maxSP;
+            }
+
+            if (move.Stats.skills.ContainsKey("Sprint"))
+            {
+                moveSpeed = InputManager.Instance.Sprint && hasSprintPower && canSprint ? sprintSpeed : runSpeed;
+            }
+            else
+            {
+                moveSpeed = runSpeed;
+            }
 
             if (InputManager.Instance.Move != Vector2.zero)
             {
@@ -62,6 +80,12 @@ namespace VentureBound.CharacterMovement
                         else
                         {
                             move.CurrentSpeed = sprintSpeed;
+                            move.Stats.currentSP -= 3f * Time.deltaTime;
+
+                            if (move.Stats.currentSP <= 0f)
+                            {
+                                canSprint = false;
+                            }
                         }
                     }
                     else if (move.CurrentSpeed > maxSpeed + 0.1f)
@@ -83,16 +107,19 @@ namespace VentureBound.CharacterMovement
 
             move.FaceDirection(move.Direction);
 
-            if (useJump)
+            if (move.Stats.skills.ContainsKey("Jump"))
             {
-                if (InputManager.Instance.Jump && canJump)
+                if (useJump)
                 {
-                    move.VerticalSpeed = jumpSpeed;
-                }
+                    if (InputManager.Instance.Jump && canJump)
+                    {
+                        move.VerticalSpeed = jumpSpeed;
+                    }
 
-                if (!InputManager.Instance.Jump && !canJump)
-                {
-                    canJump = true;
+                    if (!InputManager.Instance.Jump && !canJump)
+                    {
+                        canJump = true;
+                    }
                 }
             }
 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using VentureBound.Database;
 
@@ -7,6 +8,8 @@ namespace VentureBound.CharacterData
     {
         public Class myClass;
         public ElementAffinity myAffinity;
+
+        public Dictionary<string, Skill> skills = new Dictionary<string, Skill>();
 
         public float maxHP;
         public float maxMP;

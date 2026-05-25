@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using VentureBound.CharacterData;
 
 namespace VentureBound.CharacterMovement
 {
@@ -7,6 +8,7 @@ namespace VentureBound.CharacterMovement
     public class MovementController : MonoBehaviour
     {
         public CharacterController Controller {  get; private set; }
+        public CharacterStats Stats { get; private set; }
 
         public MoveState CurrentState { get; private set; }
         public Dictionary<string, MoveState> States = new Dictionary<string, MoveState>();
@@ -20,6 +22,7 @@ namespace VentureBound.CharacterMovement
             Direction = transform.forward;
 
             Controller = GetComponent<CharacterController>();
+            Stats = GetComponent<CharacterStats>();
 
             InitializeStateMachine();
         }

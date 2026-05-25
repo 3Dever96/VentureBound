@@ -8,8 +8,6 @@ namespace VentureBound.CharacterData
     {
         public Race myRace;
 
-        public Dictionary<string, Skill> skills = new Dictionary<string, Skill>();
-
         private void Start()
         {
             int classIndex = Random.Range(0, 12);
